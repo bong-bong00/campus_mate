@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+body { margin:0; background:#E8E4DC; }
+a { color:#6B5B3E; text-decoration:none; }
+a:hover { color:#3A2F1C; }
+</style>
+</helmet>
+<div style="width:1440px;height:900px;display:flex;flex-direction:column;background:#FAF8F3;font-family:'IBM Plex Sans KR',sans-serif;color:#22201B;overflow:hidden;box-shadow:0 24px 60px rgba(40,34,20,.22);border:1px solid #D8D2C4">
+
+  <div style="height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#F1EDE4;border-bottom:1px solid #DCD5C6">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:9px;height:9px;background:#8A7A52;transform:rotate(45deg)"></div>
+      <span style="font-size:12px;letter-spacing:.06em;color:#5F594B">학사 브리핑</span>
+    </div>
+    <div style="display:flex;gap:22px;font-size:12px;color:#8A8272;font-family:'IBM Plex Mono',monospace">
+      <span>—</span><span>▫</span><span>✕</span>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <div style="width:186px;flex:none;background:#F3EFE6;border-right:1px solid #DCD5C6;display:flex;flex-direction:column;padding:20px 0">
+      <div style="padding:0 20px 18px;font-size:11px;letter-spacing:.14em;color:#9C9382">MENU</div>
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+        <div onClick="{{ n.go }}" style="padding:9px 20px;font-size:13.5px;color:#4B4639;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-left:2px solid transparent" style-hover="background:#EAE4D6">
+          <span>{{ n.label }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A79C84">{{ n.count }}</span>
+        </div>
+      </sc-for>
+      <div style="margin-top:auto;padding:16px 20px;border-top:1px solid #DCD5C6">
+        <div style="font-family:'Noto Serif KR',serif;font-size:14px">김서연</div>
+        <div style="font-size:11.5px;color:#8A8272;margin-top:3px">컴퓨터공학과 3학년 · 4.02</div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:0;overflow-y:auto;padding:34px 44px 48px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1.5px solid #22201B;padding-bottom:14px">
+        <div>
+          <div style="font-family:'Noto Serif KR',serif;font-size:31px;font-weight:600;letter-spacing:-.01em">이번 주 브리핑</div>
+          <div style="font-size:13px;color:#7A7264;margin-top:7px">10월 13일 월요일 · 마감 임박 3건, 착수 시점 도래 2건</div>
+        </div>
+        <div style="text-align:right;font-family:'IBM Plex Mono',monospace">
+          <div style="font-size:11px;color:#9C9382;letter-spacing:.1em">EXAM PERIOD</div>
+          <div style="font-size:14px;color:#A0492F;margin-top:4px">10.20 – 10.24</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:18px;margin-top:26px">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="flex:1;background:#F3EFE6;border:1px solid #E0DACB;padding:16px 18px">
+            <div style="font-size:11.5px;color:#857D6C;letter-spacing:.04em">{{ s.label }}</div>
+            <div style="font-family:'Noto Serif KR',serif;font-size:30px;font-weight:600;margin-top:8px;color:{{ s.tone }}">{{ s.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:34px;margin-top:36px;align-items:start">
+        <div>
+          <div style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:600;margin-bottom:2px">해야 할 일</div>
+          <div style="font-size:12px;color:#8A8272;margin-bottom:14px">마감이 가깝거나 서류 착수 시점이 온 항목</div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ todos }}" as="t" hint-placeholder-count="4">
+              <div onClick="{{ t.open }}" style="display:flex;gap:16px;padding:15px 4px;border-top:1px solid #E2DCCD;cursor:pointer" style-hover="background:#F4F0E7">
+                <div style="width:52px;flex:none;text-align:center;font-family:'IBM Plex Mono',monospace">
+                  <div style="font-size:17px;color:{{ t.dTone }}">{{ t.d }}</div>
+                  <div style="font-size:10px;color:#A79C84;margin-top:2px">{{ t.date }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="font-size:14.5px;font-weight:500">{{ t.title }}</span>
+                    <span style="font-size:10.5px;padding:2px 7px;border-radius:2px;background:{{ t.badgeBg }};color:{{ t.badgeFg }};white-space:nowrap">{{ t.badge }}</span>
+                  </div>
+                  <div style="font-size:12.5px;color:#7A7264;margin-top:5px;line-height:1.5">{{ t.note }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="background:#FBF3EE;border:1px solid #E8CFC2;padding:17px 18px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#A0492F;font-family:'IBM Plex Mono',monospace">CONFLICT</div>
+            <div style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;margin-top:9px;line-height:1.45">중간고사 기간과 겹치는 마감 2건</div>
+            <div style="font-size:12.5px;color:#6E5B50;margin-top:8px;line-height:1.6">교내 우수학생 장학(10.22), 해외교류 프로그램(10.23). 서류 발급까지 고려해 시험 전 주에 마쳐두세요.</div>
+          </div>
+
+          <div>
+            <div style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:600;margin-bottom:12px">지원 가능한 신규 공고</div>
+            <sc-for list="{{ news }}" as="n" hint-placeholder-count="3">
+              <div onClick="{{ n.open }}" style="padding:12px 0;border-top:1px solid #E2DCCD;cursor:pointer" style-hover="opacity:.7">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="width:6px;height:6px;border-radius:50%;background:{{ n.dot }};flex:none"></span>
+                  <span style="font-size:13.5px;flex:1;min-width:0">{{ n.title }}</span>
+                </div>
+                <div style="font-size:11.5px;color:#8A8272;margin-top:5px;padding-left:14px">{{ n.meta }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const noop = () => {};
+    return {
+      nav: [
+        {label:'브리핑', count:'', go:noop},
+        {label:'공고', count:'42', go:noop},
+        {label:'혜택·프로그램', count:'11', go:noop},
+        {label:'캘린더', count:'', go:noop},
+        {label:'시간표', count:'', go:noop},
+        {label:'프로필', count:'', go:noop},
+        {label:'알림', count:'3', go:noop},
+      ],
+      stats: [
+        {label:'지원 가능', value:'7', tone:'#3F6B4A'},
+        {label:'확인 필요', value:'5', tone:'#8A6A1F'},
+        {label:'자격 미달', value:'12', tone:'#9A9080'},
+        {label:'이번 주 마감', value:'3', tone:'#A0492F'},
+      ],
+      todos: [
+        {d:'D-3', dTone:'#A0492F', date:'10.16', title:'국가장학금 II유형 2학기', badge:'지원 가능', badgeBg:'#E4EDE3', badgeFg:'#3F6B4A', note:'필요 서류 3종 모두 보유. 신청서만 작성하면 됩니다.', open:noop},
+        {d:'D-5', dTone:'#A0492F', date:'10.18', title:'교내 성적우수 장학', badge:'확인 필요', badgeBg:'#F5EDDA', badgeFg:'#8A6A1F', note:'직전 학기 12학점 이수 여부가 확인되지 않았습니다.', open:noop},
+        {d:'착수', dTone:'#5A6B8A', date:'오늘', title:'해외교류 프로그램 서류', badge:'준비 시작', badgeBg:'#E6EAF1', badgeFg:'#4A5A78', note:'영문 성적증명서 발급에 3영업일. 마감 10.23 기준 오늘 신청.', open:noop},
+        {d:'D-9', dTone:'#7A7264', date:'10.22', title:'토익 응시료 지원', badge:'지원 가능', badgeBg:'#E4EDE3', badgeFg:'#3F6B4A', note:'응시확인서 업로드 필요. 시험 주간과 겹칩니다.', open:noop},
+      ],
+      news: [
+        {title:'2학기 근로장학생 추가 모집', meta:'학생지원팀 · 10.11 등록 · 마감 10.24', dot:'#3F6B4A', open:noop},
+        {title:'SW 역량강화 부트캠프 (졸업요건 인정)', meta:'SW중심대학사업단 · 이수 8시간 인정', dot:'#3F6B4A', open:noop},
+        {title:'외국인 학생 멘토링 활동비 지원', meta:'국제교류원 · 시간표 충돌 없음', dot:'#8A6A1F', open:noop},
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>
