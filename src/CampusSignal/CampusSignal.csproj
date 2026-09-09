@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CampusSignal</RootNamespace>
+    <AssemblyName>CampusSignal</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Pretendard / IBM Plex Mono 를 Fonts/ 에 넣으면 자동으로 임베드된다.
+         파일이 없으면 Segoe UI / Malgun Gothic / Consolas 로 폴백한다. -->
+    <Resource Include="Fonts\**\*.otf" />
+    <Resource Include="Fonts\**\*.ttf" />
+  </ItemGroup>
+
+</Project>

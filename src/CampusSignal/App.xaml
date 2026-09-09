@@ -1,0 +1,49 @@
+<Application x:Class="CampusSignal.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:CampusSignal.ViewModels"
+             xmlns:v="clr-namespace:CampusSignal.Views"
+             xmlns:inf="clr-namespace:CampusSignal.Infrastructure">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/Palette.xaml"/>
+        <ResourceDictionary Source="/Themes/Typography.xaml"/>
+        <ResourceDictionary Source="/Themes/Controls.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+
+      <inf:BoolToVisibilityConverter x:Key="BoolToVis"/>
+      <inf:BoolToVisibilityConverter x:Key="BoolToVisInverted" Invert="True"/>
+      <inf:NullToVisibilityConverter x:Key="NullToVis"/>
+      <inf:NullToVisibilityConverter x:Key="NullToVisInverted" Invert="True"/>
+      <inf:ZeroToVisibilityConverter x:Key="ZeroToVis"/>
+      <inf:ResourceKeyToBrushConverter x:Key="ToneKeyToBrush"/>
+
+      <!-- 뷰모델 → 뷰 매핑. 셸의 ContentControl 이 이걸 보고 화면을 고른다. -->
+      <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+        <v:DashboardView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:NoticeListViewModel}">
+        <v:NoticeListView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:NoticeDetailViewModel}">
+        <v:NoticeDetailView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:BenefitsViewModel}">
+        <v:BenefitsView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:CalendarViewModel}">
+        <v:CalendarView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:TimetableViewModel}">
+        <v:TimetableView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+        <v:ProfileView/>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:NotificationsViewModel}">
+        <v:NotificationsView/>
+      </DataTemplate>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

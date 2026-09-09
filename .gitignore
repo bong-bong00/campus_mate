@@ -1,0 +1,14 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# 폰트 바이너리는 저장소에 넣지 않는다 (src/CampusSignal/Fonts/README.md 참고)
+src/CampusSignal/Fonts/*.otf
+src/CampusSignal/Fonts/*.ttf
