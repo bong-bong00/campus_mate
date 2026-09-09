@@ -4,7 +4,9 @@
 **지원 가능 / 확인 필요 / 자격 미달**을 판정한 뒤 "지금 해야 할 일"로 제시하는
 Windows 데스크톱 앱. **WPF (.NET 8)**.
 
-디자인 핸드오프(`design_handoff_campus_signal`)의 8개 화면을 XAML/MVVM 으로 구현한 것이다.
+디자인 핸드오프의 8개 화면을 XAML/MVVM 으로 구현한 것이다.
+핸드오프 원본은 `docs/design/` 에 있고, 그중 `docs/design/README.md` 가 스펙 원본이다.
+작업 지침은 `CLAUDE.md` 를 참고한다.
 
 ## 세 가지 원칙
 
