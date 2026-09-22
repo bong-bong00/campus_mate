@@ -1,0 +1,84 @@
+<!--
+  타이포 토큰.
+  본문 Pretendard (폴백 Segoe UI → Malgun Gothic) / 수치·라벨 IBM Plex Mono (폴백 Consolas).
+  Fonts/ 에 폰트를 넣어 임베드하면 아래 FontFamily 문자열만 pack URI 로 바꾸면 된다.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/Themes/Palette.xaml"/>
+  </ResourceDictionary.MergedDictionaries>
+
+  <FontFamily x:Key="AppFontFamily">Pretendard, Apple SD Gothic Neo, Segoe UI, Malgun Gothic</FontFamily>
+  <FontFamily x:Key="MonoFontFamily">IBM Plex Mono, Consolas, Courier New</FontFamily>
+  <FontFamily x:Key="IconFontFamily">Segoe MDL2 Assets</FontFamily>
+
+  <!-- 창 컨트롤 글리프 (Segoe MDL2 Assets) -->
+  <sys:String x:Key="GlyphMinimize">&#xE921;</sys:String>
+  <sys:String x:Key="GlyphMaximize">&#xE922;</sys:String>
+  <sys:String x:Key="GlyphRestore">&#xE923;</sys:String>
+  <sys:String x:Key="GlyphClose">&#xE8BB;</sys:String>
+
+  <!-- ── 기본 텍스트 ─────────────────────────────────────────── -->
+  <Style x:Key="Text" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
+    <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+    <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+  </Style>
+
+  <Style x:Key="Mono" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}"/>
+  </Style>
+
+  <!-- 화면 제목 30px / 700 / letter-spacing -0.03em -->
+  <Style x:Key="PageTitle" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="30"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+    <Setter Property="LineHeight" Value="34.5"/>
+    <Setter Property="Foreground" Value="{StaticResource TextOnDark}"/>
+  </Style>
+
+  <Style x:Key="PageSubtitle" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Foreground" Value="{StaticResource TextOnDarkMuted}"/>
+  </Style>
+
+  <!-- 섹션 제목 16px / 700 -->
+  <Style x:Key="SectionTitle" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="16"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+  </Style>
+
+  <Style x:Key="SectionTitleSm" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+  </Style>
+
+  <Style x:Key="SectionNote" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="Foreground" Value="{StaticResource TextMuted2}"/>
+  </Style>
+
+  <!-- 카드 제목 / 본문 -->
+  <Style x:Key="CardTitle" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="12.5"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+  </Style>
+
+  <Style x:Key="CardBody" TargetType="TextBlock" BasedOn="{StaticResource Text}">
+    <Setter Property="FontSize" Value="12.5"/>
+    <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+    <Setter Property="LineHeight" Value="20"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+  </Style>
+
+  <!-- Mono 라벨 (대문자 트래킹) -->
+  <Style x:Key="MonoLabel" TargetType="TextBlock" BasedOn="{StaticResource Mono}">
+    <Setter Property="FontSize" Value="10.5"/>
+    <Setter Property="Foreground" Value="{StaticResource TextMonoLabel}"/>
+  </Style>
+
+</ResourceDictionary>

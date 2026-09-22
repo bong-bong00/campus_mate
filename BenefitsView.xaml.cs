@@ -1,0 +1,8 @@
+using System.Windows.Controls;
+
+namespace CampusSignal.Views;
+
+public partial class BenefitsView : UserControl
+{
+    public BenefitsView() => InitializeComponent();
+}
