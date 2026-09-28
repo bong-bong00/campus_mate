@@ -99,6 +99,12 @@ npm run lint     # 코드 검사
 **코드를 고쳤으면 `npm run build` 를 돌려보고 커밋한다.** 이 프로젝트의 이전 버전(WPF)은
 한 번도 컴파일하지 못한 채 커밋됐다. 같은 일을 반복하지 않는다.
 
+Next.js 16 은 학습 데이터와 다른 부분이 많다. API·규약·파일 구조를 추측하지 말고
+`node_modules/next/dist/docs/` 의 해당 문서를 먼저 읽는다. 특히 데이터 패칭·캐싱·
+Route Handler 는 버전마다 크게 바뀐 영역이다.
+
+이 파일 끝의 `nextjs-agent-rules` 블록은 `next dev` 가 매번 다시 붙인다. 지우지 않는다.
+
 ## Git
 
 - 개발 브랜치: `claude/wpf-app-design-implementation-w1glgm`
@@ -120,3 +126,13 @@ npm run lint     # 코드 검사
 | 팀원 모집 게시판 | 보류 — 여유가 되면 |
 
 로딩 · 빈 상태 · 오류 화면도 아직 없다.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
