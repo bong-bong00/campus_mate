@@ -99,6 +99,12 @@ npm run lint     # 코드 검사
 **코드를 고쳤으면 `npm run build` 를 돌려보고 커밋한다.** 이 프로젝트의 이전 버전(WPF)은
 한 번도 컴파일하지 못한 채 커밋됐다. 같은 일을 반복하지 않는다.
 
+Next.js 16 은 학습 데이터와 다른 부분이 많다. API·규약·파일 구조를 추측하지 말고
+`node_modules/next/dist/docs/` 의 해당 문서를 먼저 읽는다. 특히 데이터 패칭·캐싱·
+Route Handler 는 버전마다 크게 바뀐 영역이다.
+
+이 파일 끝의 `nextjs-agent-rules` 블록은 `next dev` 가 매번 다시 붙인다. 지우지 않는다.
+
 ## Git
 
 - 개발 브랜치: `claude/wpf-app-design-implementation-w1glgm`
@@ -106,17 +112,33 @@ npm run lint     # 코드 검사
 - 작업을 브랜치에 쌓고, 정리되면 `main` 으로 합친다
 - PR 은 사용자가 요청할 때만 만든다
 
-## 현재 비어 있는 것
-
-화면 네 개는 뼈대만 있다. 아래 순서로 채운다.
+## 현재 상태
 
 | 단계 | 상태 |
 |---|---|
-| 프로필 데이터 구조 확정 | 초안만 — `src/features/profile/types.ts` |
-| 공모전 수집 (API · 크롤링) | 없음 |
+| 프로필 데이터 구조 | **완료** — `features/profile/types.ts` |
+| 프로필 입력 폼 | **완료** — 브라우저 저장소에 저장 |
+| 판정 엔진 | **완료** — `features/contests/judge.ts` |
+| 공모전 목록 · 상세 | **완료** — 표본 데이터 기준 |
+| 공모전 수집 (API · 크롤링) | 없음 — `features/contests/sample.ts` 가 대신하고 있다 |
 | AI 코칭 (Claude API) | 없음 |
+| 대시보드 내용 | 없음 — 자리표시자 |
 | DB (PostgreSQL + Prisma) | 없음 |
 | 로그인 | 없음 |
 | 팀원 모집 게시판 | 보류 — 여유가 되면 |
 
-로딩 · 빈 상태 · 오류 화면도 아직 없다.
+로딩 · 오류 화면도 아직 없다.
+
+**판정 엔진을 고칠 때는** `features/contests/judge.ts` 의 `Rule` 종류를 늘리는 식으로 한다.
+요강마다 자격 조건의 모양이 다르므로, 새 조건이 나오면 `Rule` 에 kind 를 추가하고
+`check()` 에 분기를 넣는다. 화면 코드는 건드릴 일이 없어야 한다.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

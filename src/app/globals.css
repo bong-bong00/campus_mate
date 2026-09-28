@@ -48,6 +48,7 @@
   --color-check-dot: #c9a227;
   --color-fail-bg: #f0e3de;
   --color-fail-fg: #9c482b;
+  --color-warn-surface: #fcf4f0;
 
   /* 액센트 (라임) — 밝은 배경 위 텍스트로는 절대 쓰지 말 것 */
   --color-lime: #b9f27c;
