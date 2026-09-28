@@ -1,0 +1,63 @@
+/* 디자인이 지정한 두 서체. 받아오지 못해도 아래 폴백 체인으로 동작한다. */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+/*
+  디자인 토큰 — docs/design/README.md 의 확정값을 그대로 옮긴 것.
+  새 색이 필요하면 화면이 아니라 여기에 먼저 추가하고 클래스로 참조한다.
+  (WPF 시절 Themes/Palette.xaml 이 하던 역할)
+*/
+@theme {
+  /* 배경 / 면 */
+  --color-ink: #12150f;
+  --color-ink-alt: #1d2019;
+  --color-surface: #ffffff;
+  --color-raised: #fcfcfa;
+  --color-sunken: #f7f7f3;
+  --color-side: #f8f8f5;
+  --color-accent-bg: #eef7e2;
+  --color-accent-soft: #f7fcf1;
+  --color-hover-row: #f6faf1;
+
+  /* 선 */
+  --color-line: #e2e2db;
+  --color-line-row: #efefe9;
+  --color-line-grid: #f0f0ea;
+  --color-line-input: #ddddd5;
+  --color-line-dashed: #c6c7be;
+  --color-line-accent: #c9e3a6;
+  --color-line-warn: #e3c9be;
+  --color-line-dark: #3a3f34;
+
+  /* 텍스트 */
+  --color-body: #12140f;
+  --color-body-2: #3b4235;
+  --color-muted: #6e7466;
+  --color-muted-2: #5f6659;
+  --color-mono-label: #6b7163;
+  --color-on-dark: #f2f1ea;
+  --color-on-dark-muted: #9aa093;
+
+  /* 판정 상태 — 지원 가능 / 확인 필요 / 자격 미달 */
+  --color-ok-bg: #e4f1da;
+  --color-ok-fg: #1f5e44;
+  --color-ok-dot: #2f8f5e;
+  --color-check-bg: #f7eed4;
+  --color-check-fg: #7e651c;
+  --color-check-dot: #c9a227;
+  --color-fail-bg: #f0e3de;
+  --color-fail-fg: #9c482b;
+
+  /* 액센트 (라임) — 밝은 배경 위 텍스트로는 절대 쓰지 말 것 */
+  --color-lime: #b9f27c;
+
+  --font-sans: Pretendard, "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+}

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+body { margin:0; background:#DDDCD8; }
+a { color:#1F5E44; text-decoration:none; }
+a:hover { color:#0F3527; }
+@keyframes toastIn { from { transform:translateY(18px); opacity:0 } to { transform:translateY(0); opacity:1 } }
+</style>
+</helmet>
+<div style="width:1440px;height:900px;position:relative;display:flex;flex-direction:column;background:#FFFFFF;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;color:#12140F;overflow:hidden;border:1px solid #C8C9C2;box-shadow:0 24px 60px rgba(18,22,16,.24)">
+
+  <div style="flex:none;background:#12150F;color:#F2F1EA;padding:0 26px">
+    <div style="height:32px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:11.5px;letter-spacing:.18em;color:#8C9184;font-family:'IBM Plex Mono',monospace">CAMPUS SIGNAL</span>
+      <div style="display:flex;gap:20px;font-size:11px;color:#6E7367;font-family:'IBM Plex Mono',monospace"><span>—</span><span>▫</span><span>✕</span></div>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:14px 0 18px;gap:24px">
+      <div style="min-width:0">
+        <div style="font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.15">{{ pageTitle }}</div>
+        <div style="font-size:13px;color:#9AA093;margin-top:8px">{{ pageSub }}</div>
+      </div>
+      <div style="display:flex;gap:8px;flex:none">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8">
+          <div onClick="{{ n.go }}" style="padding:7px 13px;font-size:12.5px;border:1px solid {{ n.bd }};color:{{ n.fg }};background:{{ n.bg }};cursor:pointer;border-radius:2px;white-space:nowrap" style-hover="border-color:#B9F27C">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:1;min-height:0;overflow-y:auto">
+
+    <!-- ── 대시보드 ── -->
+    <sc-if value="{{ isDash }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:0 26px 34px">
+        <div onClick="{{ openHero }}" style="display:grid;grid-template-columns:150px 1fr 260px;gap:26px;align-items:center;background:#EEF7E2;border:1px solid #C9E3A6;border-top:none;padding:22px 24px;cursor:pointer">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:40px;font-weight:600;color:#1F5E44;line-height:1">D-3</div>
+            <div style="font-size:11.5px;color:#5E6B55;margin-top:5px;font-family:'IBM Plex Mono',monospace">10.16 18:00</div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:11px;padding:3px 9px;background:#1F5E44;color:#EFFAE6;border-radius:2px;font-weight:600">지원 가능</span>
+              <span style="font-size:11.5px;color:#5E6B55;font-family:'IBM Plex Mono',monospace">한국장학재단 API</span>
+            </div>
+            <div style="font-size:22px;font-weight:700;margin-top:11px;letter-spacing:-.02em">국가장학금 II유형 2학기 신청</div>
+            <div style="font-size:13.5px;color:#4A5544;margin-top:8px;line-height:1.6">요건 4/4 충족 · 필요 서류 3종 모두 보유 · 중복 수혜 충돌 1건(교내 성적우수 장학)</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="text-align:center;padding:11px;background:#12150F;color:#F2F1EA;font-size:13.5px;font-weight:600;border-radius:2px">신청서 작성하기</div>
+            <div style="text-align:center;padding:11px;border:1px solid #B4CE94;font-size:13px;color:#33422C;border-radius:2px">공고 원문 보기</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 330px;gap:26px;margin-top:26px;align-items:start">
+          <div>
+            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px">
+              <div style="font-size:16px;font-weight:700">그다음 할 일</div>
+              <div style="font-size:12px;color:#5F6659">긴급도 순 · 서류 발급 시간 반영</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ todos }}" as="i" hint-placeholder-count="4">
+                <div onClick="{{ i.open }}" style="display:grid;grid-template-columns:74px 1fr 112px;gap:18px;align-items:center;border:1px solid #E2E2DB;padding:14px 16px;background:#FCFCFA;cursor:pointer;border-radius:2px" style-hover="border-color:#12150F">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:{{ i.dTone }}">{{ i.d }}</div>
+                  <div style="min-width:0">
+                    <div style="display:flex;align-items:center;gap:9px">
+                      <span style="font-size:14.5px;font-weight:600">{{ i.title }}</span>
+                      <span style="font-size:10.5px;padding:2px 7px;background:{{ i.bg }};color:{{ i.fg }};border-radius:2px;white-space:nowrap">{{ i.state }}</span>
+                    </div>
+                    <div style="font-size:12.5px;color:#6E7466;margin-top:5px;line-height:1.55">{{ i.note }}</div>
+                  </div>
+                  <div style="font-size:12px;color:#33422C;text-align:right;font-weight:500">{{ i.action }} →</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;align-items:baseline;gap:12px;margin:26px 0 12px">
+              <div style="font-size:16px;font-weight:700">시간표와 겹치지 않는 프로그램</div>
+              <div style="font-size:12px;color:#5F6659">충돌 4건 자동 제외됨</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <sc-for list="{{ progs }}" as="p" hint-placeholder-count="3">
+                <div onClick="{{ p.open }}" style="border:1px solid #E2E2DB;padding:13px 14px;background:#FCFCFA;cursor:pointer;border-radius:2px" style-hover="border-color:#12150F">
+                  <div style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:#6B7163">{{ p.tag }}</div>
+                  <div style="font-size:13.5px;font-weight:600;margin-top:8px;line-height:1.4">{{ p.title }}</div>
+                  <div style="font-size:11.5px;color:#6E7466;margin-top:7px">{{ p.meta }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:#12150F;color:#EFEFE7;padding:18px;border-radius:2px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:#B9F27C">EXAM CONFLICT</div>
+              <div style="font-size:15.5px;font-weight:700;margin-top:10px;line-height:1.5">중간고사 10.20–10.24와 마감 2건이 겹칩니다</div>
+              <div style="font-size:12.5px;color:#A3A99A;margin-top:9px;line-height:1.65">서류 발급 소요를 더하면 실질 착수 기한은 <span style="color:#EFEFE7">10.16(목)</span>입니다.</div>
+            </div>
+
+            <div style="border:1px solid #E2E2DB;border-radius:2px;overflow:hidden">
+              <div style="padding:12px 15px;border-bottom:1px solid #E2E2DB;font-size:13px;font-weight:700;background:#F7F7F3;display:flex;justify-content:space-between;align-items:center">
+                <span>이번 주 캘린더</span>
+                <span onClick="{{ goCal }}" style="font-size:11.5px;font-weight:500;color:#1F5E44;cursor:pointer">전체 보기 →</span>
+              </div>
+              <sc-for list="{{ week }}" as="w" hint-placeholder-count="5">
+                <div style="display:flex;gap:12px;padding:10px 15px;border-bottom:1px solid #EFEFE9;align-items:center">
+                  <div style="width:34px;flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B7163">{{ w.day }}</div>
+                  <div style="flex:1;min-width:0;font-size:12.5px;color:#2A2F26">{{ w.title }}</div>
+                  <div style="width:6px;height:6px;border-radius:50%;background:{{ w.tone }};flex:none"></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div onClick="{{ goProfile }}" style="border:1px solid #E2E2DB;padding:14px 15px;border-radius:2px;cursor:pointer" style-hover="border-color:#12150F">
+              <div style="font-size:13px;font-weight:700">확인 필요 5건</div>
+              <div style="font-size:12.5px;color:#6E7466;margin-top:7px;line-height:1.6">프로필의 <strong style="font-weight:600;color:#12140F">직전 학기 이수 학점</strong>이 비어 있어 판정이 보류된 항목입니다.</div>
+              <div style="margin-top:11px;font-size:12.5px;font-weight:600;color:#1F5E44">성적표 업로드로 자동 입력 →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 공고 목록 ── -->
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:220px 1fr;min-height:100%">
+        <div style="border-right:1px solid #E2E2DB;background:#F8F8F5;padding:18px 0">
+          <div style="padding:0 16px 10px;font-size:10.5px;letter-spacing:.13em;color:#6B7163;font-family:'IBM Plex Mono',monospace">판정</div>
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+            <div onClick="{{ f.go }}" style="display:flex;align-items:center;gap:9px;padding:8px 16px;font-size:13px;cursor:pointer;color:{{ f.fg }};background:{{ f.bg }};font-weight:{{ f.w }}" style-hover="background:#EFEFE9">
+              <span style="width:8px;height:8px;background:{{ f.dot }};flex:none;border-radius:1px"></span>
+              <span style="flex:1">{{ f.label }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B7163">{{ f.n }}</span>
+            </div>
+          </sc-for>
+          <div style="padding:18px 16px 10px;font-size:10.5px;letter-spacing:.13em;color:#6B7163;font-family:'IBM Plex Mono',monospace">출처</div>
+          <sc-for list="{{ sources }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:9px;padding:7px 16px;font-size:12.5px;color:#4A5044;cursor:pointer" style-hover="background:#EFEFE9">
+              <span style="flex:1">{{ s.label }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B7163">{{ s.n }}</span>
+            </div>
+          </sc-for>
+          <div style="margin:18px 16px 0;padding:12px;border:1px dashed #C6C7BE;border-radius:2px;text-align:center;font-size:12.5px;color:#4A5044;cursor:pointer" style-hover="border-color:#12150F">＋ 공고 직접 등록<div style="font-size:11px;color:#6B7163;margin-top:4px">URL · PDF · 캡처</div></div>
+        </div>
+
+        <div style="min-width:0">
+          <div style="display:grid;grid-template-columns:78px 1fr 96px 130px 92px;padding:12px 22px;border-bottom:1px solid #E2E2DB;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;color:#6B7163;background:#FAFAF7">
+            <div>D-DAY</div><div>공고</div><div>판정</div><div>출처</div><div>요건</div>
+          </div>
+          <sc-for list="{{ notices }}" as="n" hint-placeholder-count="9">
+            <div onClick="{{ n.open }}" style="display:grid;grid-template-columns:78px 1fr 96px 130px 92px;padding:14px 22px;border-bottom:1px solid #EFEFE9;cursor:pointer;align-items:center" style-hover="background:#F6FAF1">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;color:{{ n.dTone }}">{{ n.d }}</div>
+              <div style="min-width:0;padding-right:18px">
+                <div style="font-size:14px;font-weight:600">{{ n.title }}</div>
+                <div style="font-size:12px;color:#5F6659;margin-top:4px">{{ n.note }}</div>
+              </div>
+              <div><span style="font-size:10.5px;padding:2px 7px;background:{{ n.bg }};color:{{ n.fg }};border-radius:2px;white-space:nowrap">{{ n.state }}</span></div>
+              <div style="font-size:11.5px;color:#5F6659;font-family:'IBM Plex Mono',monospace">{{ n.src }}</div>
+              <div style="font-size:11.5px;color:#4A5044;font-family:'IBM Plex Mono',monospace">{{ n.req }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 공고 상세 ── -->
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px">
+        <div onClick="{{ goList }}" style="font-size:12.5px;color:#6E7466;cursor:pointer;margin-bottom:14px">← 공고 목록</div>
+        <div style="display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:start">
+
+          <div>
+            <div style="border:1px solid {{ dt.heroBd }};background:{{ dt.heroBg }};padding:20px 22px;border-radius:2px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;padding:3px 9px;background:{{ dt.badgeBg }};color:{{ dt.badgeFg }};border-radius:2px;font-weight:600">{{ dt.state }}</span>
+                <span style="font-size:11.5px;color:#5E6B55;font-family:'IBM Plex Mono',monospace">{{ dt.src }}</span>
+              </div>
+              <div style="font-size:24px;font-weight:700;margin-top:12px;letter-spacing:-.02em">{{ dt.title }}</div>
+              <div style="display:flex;gap:26px;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#4A5544">
+                <span>{{ dt.due }}</span><span>{{ dt.d }}</span><span>{{ dt.amount }}</span>
+              </div>
+            </div>
+
+            <div style="margin-top:22px;font-size:15px;font-weight:700">자격 요건 대조</div>
+            <div style="font-size:12px;color:#5F6659;margin-top:4px">공고문에서 추출한 요건을 내 프로필과 겹쳐 판정했습니다</div>
+            <div style="margin-top:12px;border:1px solid #E2E2DB;border-radius:2px;overflow:hidden">
+              <sc-for list="{{ reqs }}" as="r" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:28px 1fr 200px;gap:14px;padding:13px 16px;border-bottom:1px solid #EFEFE9;align-items:center">
+                  <div style="font-size:14px;color:{{ r.mark }};font-weight:700;text-align:center">{{ r.icon }}</div>
+                  <div>
+                    <div style="font-size:13.5px;font-weight:500">{{ r.label }}</div>
+                    <div style="font-size:11.5px;color:#6B7163;margin-top:3px">{{ r.src }}</div>
+                  </div>
+                  <div style="font-size:12.5px;color:#3B4235;font-family:'IBM Plex Mono',monospace">{{ r.mine }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top:22px;font-size:15px;font-weight:700">필요 서류 · 착수 역산</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:1fr 130px 118px 92px;gap:12px;align-items:center;border:1px solid #E2E2DB;padding:12px 15px;border-radius:2px;background:#FCFCFA">
+                  <div style="font-size:13.5px;font-weight:500">{{ d.name }}</div>
+                  <div style="font-size:12px;color:#5F6659">{{ d.where }}</div>
+                  <div style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:#4A5044">{{ d.lead }}</div>
+                  <div><span style="font-size:10.5px;padding:2px 7px;background:{{ d.bg }};color:{{ d.fg }};border-radius:2px">{{ d.state }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:10px;background:#12150F;color:#EFEFE7;padding:14px 16px;border-radius:2px;font-size:13px;line-height:1.6">
+              {{ dt.leadNote }}
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="border:1px solid {{ dt.sideBd }};background:{{ dt.sideBg }};padding:15px 16px;border-radius:2px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:{{ dt.sideTone }}">{{ dt.sideKind }}</div>
+              <div style="font-size:14px;font-weight:700;margin-top:8px;line-height:1.5">{{ dt.sideTitle }}</div>
+              <div style="font-size:12.5px;color:#6B584F;margin-top:7px;line-height:1.6">{{ dt.sideBody }}</div>
+            </div>
+
+            <div style="border:1px solid #E2E2DB;border-radius:2px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#F7F7F3;border-bottom:1px solid #E2E2DB">
+                <span style="font-size:12.5px;font-weight:700">공고 원문</span>
+                <span style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:#6B7163">{{ dt.file }}</span>
+              </div>
+              <div style="height:250px;background:repeating-linear-gradient(135deg,#F2F2ED 0 7px,#EAEAE3 7px 14px);display:flex;align-items:center;justify-content:center">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#5F6659;background:#FCFCFA;padding:5px 11px;border:1px solid #DCDCD3">PDF 뷰어 (요건 문장 하이라이트)</span>
+              </div>
+              <div style="padding:11px 14px;font-size:12px;color:#6E7466;line-height:1.6;border-top:1px solid #E2E2DB">{{ dt.pdfNote }}</div>
+            </div>
+
+            <div style="border:1px solid #E2E2DB;padding:14px 15px;border-radius:2px">
+              <div style="font-size:12.5px;font-weight:700">변경 이력</div>
+              <div style="font-size:12.5px;color:#6E7466;margin-top:8px;line-height:1.65">{{ dt.history }}</div>
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;text-align:center;padding:12px;background:{{ dt.ctaBg }};color:{{ dt.ctaFg }};font-size:13.5px;font-weight:600;border-radius:2px;cursor:pointer">{{ dt.cta }}</div>
+              <div style="padding:12px 16px;border:1px solid #C6C7BE;font-size:13px;border-radius:2px;cursor:pointer">저장</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 혜택·프로그램 ── -->
+    <sc-if value="{{ isBenefit }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px">
+        <div style="display:flex;gap:8px;margin-bottom:18px">
+          <sc-for list="{{ benefitTabs }}" as="b" hint-placeholder-count="4">
+            <div style="padding:7px 14px;border:1px solid {{ b.bd }};background:{{ b.bg }};color:{{ b.fg }};font-size:12.5px;border-radius:2px;cursor:pointer">{{ b.label }}</div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="6">
+            <div style="border:1px solid {{ b.bd }};background:{{ b.cardBg }};padding:16px 17px;border-radius:2px;opacity:{{ b.op }}">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:#6B7163">{{ b.dept }}</span>
+                <span style="font-size:10.5px;padding:2px 7px;background:{{ b.bg }};color:{{ b.fg }};border-radius:2px">{{ b.state }}</span>
+              </div>
+              <div style="font-size:15px;font-weight:700;margin-top:10px;line-height:1.4">{{ b.title }}</div>
+              <div style="font-size:12.5px;color:#6E7466;margin-top:8px;line-height:1.6">{{ b.desc }}</div>
+              <div style="display:flex;gap:14px;margin-top:12px;padding-top:11px;border-top:1px solid #E7E7E0;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#5F6659">
+                <span>{{ b.time }}</span><span>{{ b.credit }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:22px;font-size:15px;font-weight:700">시간표 충돌로 제외된 항목 4건</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ excluded }}" as="e" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:14px;padding:11px 15px;border:1px solid #EFEFE9;background:#FAFAF7;border-radius:2px">
+              <span style="font-size:13px;color:#5F6659;flex:1">{{ e.title }}</span>
+              <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:#9C482B">{{ e.clash }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 캘린더 ── -->
+    <sc-if value="{{ isCal }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px;display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+        <div style="border:1px solid #E2E2DB;border-radius:2px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);background:#F7F7F3;border-bottom:1px solid #E2E2DB">
+            <sc-for list="{{ dows }}" as="d" hint-placeholder-count="7">
+              <div style="padding:9px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B7163">{{ d }}</div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:112px">
+            <sc-for list="{{ days }}" as="c" hint-placeholder-count="35">
+              <div style="border-right:1px solid #EFEFE9;border-bottom:1px solid #EFEFE9;padding:7px 8px;background:{{ c.bg }};min-width:0;overflow:hidden">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:{{ c.numTone }}">{{ c.num }}</div>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:5px">
+                  <sc-for list="{{ c.events }}" as="e" hint-placeholder-count="1">
+                    <div style="font-size:10.5px;padding:2px 5px;border-radius:2px;background:{{ e.bg }};color:{{ e.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px solid #E2E2DB;padding:14px 15px;border-radius:2px">
+            <div style="font-size:12.5px;font-weight:700;margin-bottom:10px">표시 항목</div>
+            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:9px;padding:5px 0;font-size:12.5px;color:#3B4235">
+                <span style="width:10px;height:10px;border-radius:2px;background:{{ l.c }}"></span><span>{{ l.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#12150F;color:#EFEFE7;padding:16px;border-radius:2px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:#B9F27C">OVERLAP</div>
+            <div style="font-size:14.5px;font-weight:700;margin-top:9px;line-height:1.5">시험 주간에 마감 2건</div>
+            <div style="font-size:12.5px;color:#A3A99A;margin-top:8px;line-height:1.65">10.22 토익 응시료 지원, 10.23 해외교류 프로그램. 시험 전 주로 당겨 처리하세요.</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 시간표 ── -->
+    <sc-if value="{{ isTime }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px;display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+        <div style="border:1px solid #E2E2DB;border-radius:2px;overflow:hidden;background:#FCFCFA">
+          <div style="display:grid;grid-template-columns:56px repeat(5,1fr);background:#F7F7F3;border-bottom:1px solid #E2E2DB">
+            <div></div>
+            <sc-for list="{{ weekdays }}" as="d" hint-placeholder-count="5">
+              <div style="padding:9px 0;text-align:center;font-size:12.5px;font-weight:600">{{ d }}</div>
+            </sc-for>
+          </div>
+          <div style="position:relative;display:grid;grid-template-columns:56px repeat(5,1fr);grid-template-rows:repeat(10,56px)">
+            <sc-for list="{{ hours }}" as="h" hint-placeholder-count="10">
+              <div style="grid-column:1;border-right:1px solid #E2E2DB;border-bottom:1px solid #F0F0EA;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6B7163;padding:4px 6px;text-align:right">{{ h }}</div>
+            </sc-for>
+            <sc-for list="{{ cells }}" as="c" hint-placeholder-count="50">
+              <div style="border-right:1px solid #F0F0EA;border-bottom:1px solid #F0F0EA"></div>
+            </sc-for>
+            <sc-for list="{{ classes }}" as="c" hint-placeholder-count="6">
+              <div style="grid-area:{{ c.area }};margin:2px;background:{{ c.bg }};border-left:3px solid {{ c.bd }};padding:6px 8px;border-radius:2px;overflow:hidden">
+                <div style="font-size:12px;font-weight:600;color:#20261C">{{ c.name }}</div>
+                <div style="font-size:10.5px;color:#5E6B55;margin-top:3px;font-family:'IBM Plex Mono',monospace">{{ c.room }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px dashed #C6C7BE;padding:20px 16px;border-radius:2px;text-align:center;cursor:pointer" style-hover="border-color:#12150F">
+            <div style="font-size:13.5px;font-weight:600">시간표 파일 업로드</div>
+            <div style="font-size:11.5px;color:#6B7163;margin-top:6px;line-height:1.6">포털에서 내려받은 xlsx · 캡처 이미지<br />끌어다 놓으세요</div>
+          </div>
+          <div style="border:1px solid #E2E2DB;padding:14px 15px;border-radius:2px">
+            <div style="font-size:12.5px;font-weight:700;margin-bottom:10px">수동 추가</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="border:1px solid #DDDDD5;padding:9px 11px;font-size:12.5px;color:#6B7163;border-radius:2px">과목명</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div style="border:1px solid #DDDDD5;padding:9px 11px;font-size:12.5px;color:#6B7163;border-radius:2px">요일</div>
+                <div style="border:1px solid #DDDDD5;padding:9px 11px;font-size:12.5px;color:#6B7163;border-radius:2px">교시</div>
+              </div>
+              <div style="text-align:center;padding:10px;background:#12150F;color:#F2F1EA;font-size:12.5px;font-weight:600;border-radius:2px;cursor:pointer">추가</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#5F6659;line-height:1.7;padding:0 2px">시간표는 프로그램 충돌 판정과 마감 일정 계산에만 사용됩니다. 수강신청 기능은 제공하지 않습니다.</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 프로필 ── -->
+    <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px;display:grid;grid-template-columns:1fr 330px;gap:24px;align-items:start">
+        <div>
+          <div style="border:1px solid #C9E3A6;background:#EEF7E2;padding:16px 18px;border-radius:2px;display:flex;align-items:center;gap:18px">
+            <div style="flex:1">
+              <div style="font-size:14.5px;font-weight:700">성적표를 올리면 아래 항목이 자동으로 채워집니다</div>
+              <div style="font-size:12.5px;color:#4A5544;margin-top:6px">학점·이수 학점·수강 이력 · 파일은 기기에만 저장됩니다</div>
+            </div>
+            <div style="padding:10px 16px;background:#12150F;color:#F2F1EA;font-size:12.5px;font-weight:600;border-radius:2px;cursor:pointer">성적표 업로드</div>
+          </div>
+
+          <sc-for list="{{ profileGroups }}" as="g" hint-placeholder-count="3">
+            <div style="margin-top:22px">
+              <div style="font-size:14.5px;font-weight:700">{{ g.title }}</div>
+              <div style="font-size:12px;color:#5F6659;margin-top:4px">{{ g.desc }}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+                <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+                  <div style="border:1px solid {{ f.bd }};background:{{ f.bg }};padding:11px 13px;border-radius:2px">
+                    <div style="font-size:11px;color:#6B7163;font-family:'IBM Plex Mono',monospace">{{ f.label }}</div>
+                    <div style="font-size:14px;margin-top:6px;color:{{ f.fg }};font-weight:500">{{ f.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px solid #E3C9BE;background:#FCF4F0;padding:15px 16px;border-radius:2px">
+            <div style="font-size:13.5px;font-weight:700">비어 있는 항목이 판정을 막고 있습니다</div>
+            <div style="font-size:12.5px;color:#6B584F;margin-top:8px;line-height:1.65">직전 학기 이수 학점 하나 때문에 <strong style="font-weight:700">5건</strong>이 &quot;확인 필요&quot;로 남아 있습니다.</div>
+          </div>
+          <div style="border:1px solid #E2E2DB;padding:15px 16px;border-radius:2px">
+            <div style="font-size:12.5px;font-weight:700">개인정보 저장 위치</div>
+            <sc-for list="{{ privacy }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0F0EA;font-size:12.5px">
+                <span style="color:#4A5044">{{ p.k }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;color:{{ p.tone }}">{{ p.v }}</span>
+              </div>
+            </sc-for>
+            <div style="font-size:11.5px;color:#6B7163;margin-top:10px;line-height:1.65">서버에는 판정에 필요한 최소 항목만 전송됩니다.</div>
+          </div>
+          <div style="border:1px solid #E2E2DB;padding:15px 16px;border-radius:2px">
+            <div style="font-size:12.5px;font-weight:700">수혜 이력</div>
+            <sc-for list="{{ history }}" as="h" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0F0EA;font-size:12.5px">
+                <span style="color:#4A5044">{{ h.k }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;color:#5F6659">{{ h.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── 알림 ── -->
+    <sc-if value="{{ isAlert }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 26px 34px;display:grid;grid-template-columns:1fr 330px;gap:24px;align-items:start">
+        <div style="border:1px solid #E2E2DB;border-radius:2px;overflow:hidden">
+          <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="6">
+            <div onClick="{{ a.open }}" style="display:grid;grid-template-columns:8px 1fr 96px;gap:14px;padding:15px 18px;border-bottom:1px solid #EFEFE9;cursor:pointer;background:{{ a.rowBg }};align-items:center" style-hover="background:#F6FAF1">
+              <div style="width:8px;height:8px;border-radius:50%;background:{{ a.dot }}"></div>
+              <div style="min-width:0">
+                <div style="display:flex;align-items:center;gap:9px">
+                  <span style="font-size:11px;padding:2px 7px;background:{{ a.bg }};color:{{ a.fg }};border-radius:2px">{{ a.kind }}</span>
+                  <span style="font-size:14px;font-weight:600">{{ a.title }}</span>
+                </div>
+                <div style="font-size:12.5px;color:#6E7466;margin-top:5px;line-height:1.55">{{ a.body }}</div>
+              </div>
+              <div style="font-size:11.5px;color:#6B7163;font-family:'IBM Plex Mono',monospace;text-align:right">{{ a.time }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div onClick="{{ fireToast }}" style="text-align:center;padding:12px;background:#12150F;color:#F2F1EA;font-size:13px;font-weight:600;border-radius:2px;cursor:pointer">Windows 토스트 미리보기</div>
+          <div style="border:1px solid #E2E2DB;padding:15px 16px;border-radius:2px">
+            <div style="font-size:12.5px;font-weight:700;margin-bottom:10px">알림 설정</div>
+            <sc-for list="{{ settings }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #F0F0EA">
+                <span style="font-size:12.5px;color:#3B4235">{{ s.label }}</span>
+                <div style="width:34px;height:19px;border-radius:10px;background:{{ s.track }};position:relative;flex:none">
+                  <div style="position:absolute;top:2px;left:{{ s.x }};width:15px;height:15px;border-radius:50%;background:#FFFFFF"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;right:20px;bottom:20px;width:376px;background:#1D2019;color:#F1F1E9;border:1px solid #383D31;border-radius:6px;box-shadow:0 14px 34px rgba(0,0,0,.4);padding:15px 16px;animation:toastIn .22s ease-out">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;color:#8C9184">CAMPUS SIGNAL</span>
+        <span onClick="{{ hideToast }}" style="font-size:12px;color:#8C9184;cursor:pointer">✕</span>
+      </div>
+      <div style="font-size:14.5px;font-weight:700;margin-top:10px;line-height:1.45">오늘 서류를 신청해야 마감을 맞출 수 있습니다</div>
+      <div style="font-size:12.5px;color:#A3A99A;margin-top:7px;line-height:1.6">해외교류 프로그램 · 영문 성적증명서 발급 3영업일 · 마감 10.23</div>
+      <div style="display:flex;gap:8px;margin-top:13px">
+        <div onClick="{{ toastOpen }}" style="flex:1;text-align:center;padding:8px;background:#B9F27C;color:#12150F;font-size:12.5px;font-weight:600;border-radius:3px;cursor:pointer">공고 열기</div>
+        <div onClick="{{ hideToast }}" style="padding:8px 14px;border:1px solid #454B3C;font-size:12.5px;border-radius:3px;cursor:pointer;color:#CFD4C6">나중에</div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dash&quot;,&quot;list&quot;,&quot;detail&quot;,&quot;benefit&quot;,&quot;cal&quot;,&quot;time&quot;,&quot;profile&quot;,&quot;alert&quot;],&quot;default&quot;:&quot;dash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;동작&quot;},&quot;showToast&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;동작&quot;},&quot;hideIneligible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;동작&quot;}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { screen: p.startScreen ?? 'dash', toast: p.showToast ?? true, filter: '전체', sel: 'nsf2' };
+  }
+
+  go(s) { return () => this.setState({ screen: s }); }
+  openD(id) { return () => this.setState({ screen: 'detail', sel: id }); }
+
+  details() {
+    const G = {bg:'#E4F1DA', fg:'#1F5E44'}, Y = {bg:'#F7EED4', fg:'#7E651C'}, R = {bg:'#F0E3DE', fg:'#9C482B'};
+    const ok = {icon:'✓', mark:'#1F5E44'}, warn = {icon:'?', mark:'#7E651C'}, bad = {icon:'✕', mark:'#9C482B'}, flag = {icon:'!', mark:'#9C482B'};
+    return {
+      nsf2: {
+        state:'지원 가능', badgeBg:'#1F5E44', badgeFg:'#EFFAE6', heroBg:'#EEF7E2', heroBd:'#C9E3A6',
+        title:'국가장학금 II유형 2학기 신청', src:'한국장학재단 API · 학생지원팀 RSS (출처 2)',
+        due:'마감 10.16 18:00', d:'D-3', amount:'지원금 최대 1,350,000원',
+        reqs:[
+          {...ok, label:'직전 학기 12학점 이상 이수', src:'공고문 3p · "직전 학기 12학점 이상"', mine:'18학점'},
+          {...ok, label:'직전 학기 성적 80/100 이상', src:'공고문 3p', mine:'4.02 / 4.5'},
+          {...ok, label:'소득분위 8분위 이하', src:'공고문 2p · 별표1', mine:'6분위'},
+          {...ok, label:'재학 중 (휴학자 제외)', src:'공고문 2p', mine:'재학'},
+          {...flag, label:'타 장학금 중복 수혜 제한', src:'공고문 4p · 붙임2', mine:'충돌 1건'},
+        ],
+        docs:[
+          {name:'가족관계증명서', where:'정부24', lead:'즉시 발급', state:'보유', bg:G.bg, fg:G.fg},
+          {name:'성적증명서 (국문)', where:'학교 포털', lead:'즉시 발급', state:'보유', bg:G.bg, fg:G.fg},
+          {name:'영문 성적증명서', where:'학사지원팀', lead:'3영업일', state:'오늘 신청', bg:Y.bg, fg:Y.fg},
+        ],
+        leadNote:'가장 오래 걸리는 서류가 영문 성적증명서(3영업일)입니다. 마감 10.16 기준 10.13(오늘) 신청하면 됩니다.',
+        sideKind:'DUPLICATE BENEFIT', sideTone:'#9C482B', sideBg:'#FCF4F0', sideBd:'#E3C9BE',
+        sideTitle:'교내 성적우수 장학과 동시 수령 불가',
+        sideBody:'수혜액 기준 II유형(135만) > 성적우수(80만). II유형을 권장합니다.',
+        file:'2025_2학기_국가장학금.pdf · 4p', pdfNote:'3페이지 "직전 학기 12학점 이상 이수" 문장에서 요건을 추출했습니다.',
+        history:'10.09 [수정] 재공고 — 마감이 10.14 → 10.16으로 변경되었습니다.',
+        cta:'신청서 작성하기', ctaBg:'#12150F', ctaFg:'#F2F1EA',
+      },
+      merit: {
+        state:'확인 필요', badgeBg:'#7E651C', badgeFg:'#FBF5E6', heroBg:'#FCF8EC', heroBd:'#E8DBB8',
+        title:'교내 성적우수 장학', src:'학생지원팀 RSS',
+        due:'마감 10.18 23:59', d:'D-5', amount:'지원금 800,000원',
+        reqs:[
+          {...ok, label:'직전 학기 성적 상위 10%', src:'공고문 1p', mine:'상위 7%'},
+          {...warn, label:'직전 학기 12학점 이상 이수', src:'공고문 1p · 단서 조항', mine:'미입력 — 확인 필요'},
+          {...ok, label:'재학 중 (휴학자 제외)', src:'공고문 1p', mine:'재학'},
+          {...flag, label:'국가장학금 중복 수혜 제한', src:'공고문 2p', mine:'충돌 1건'},
+        ],
+        docs:[
+          {name:'성적증명서 (국문)', where:'학교 포털', lead:'즉시 발급', state:'보유', bg:G.bg, fg:G.fg},
+          {name:'재학증명서', where:'학교 포털', lead:'즉시 발급', state:'보유', bg:G.bg, fg:G.fg},
+        ],
+        leadNote:'서류는 모두 즉시 발급 가능합니다. 다만 이수 학점이 확인되기 전에는 신청해도 반려될 수 있습니다.',
+        sideKind:'MISSING INPUT', sideTone:'#7E651C', sideBg:'#FCF8EC', sideBd:'#E8DBB8',
+        sideTitle:'프로필 한 항목이 판정을 막고 있습니다',
+        sideBody:'직전 학기 이수 학점을 채우면 이 공고를 포함해 5건이 즉시 판정됩니다. 성적표 업로드로 자동 입력할 수 있습니다.',
+        file:'2025-2_성적우수장학_공고.pdf · 2p', pdfNote:'1페이지 단서 조항에서 이수 학점 요건을 발견했으나, 대조할 값이 없어 판정을 보류했습니다.',
+        history:'변경 이력 없음 · 10.06 최초 등록',
+        cta:'성적표 올리고 판정 다시 받기', ctaBg:'#7E651C', ctaFg:'#FBF5E6',
+      },
+      lowinc: {
+        state:'자격 미달', badgeBg:'#9C482B', badgeFg:'#FCEFE9', heroBg:'#FBF2EE', heroBd:'#E3C9BE',
+        title:'저소득층 근로장학', src:'한국장학재단 API',
+        due:'마감 10.24 18:00', d:'D-11', amount:'시급 11,000원 · 주 15시간',
+        reqs:[
+          {...bad, label:'소득분위 6분위 이하', src:'공고문 1p · 필수 요건', mine:'8분위 — 미달'},
+          {...ok, label:'직전 학기 성적 70/100 이상', src:'공고문 1p', mine:'4.02 / 4.5'},
+          {...ok, label:'재학 중 (휴학자 제외)', src:'공고문 1p', mine:'재학'},
+        ],
+        docs:[
+          {name:'소득분위 확인서', where:'한국장학재단', lead:'1영업일', state:'해당 없음', bg:'#EDEDE6', fg:'#5F6659'},
+        ],
+        leadNote:'필수 요건 하나가 미달이라 서류를 준비할 필요가 없습니다. 소득분위가 재산정되면 다시 판정합니다.',
+        sideKind:'NOT ELIGIBLE', sideTone:'#9C482B', sideBg:'#FBF2EE', sideBd:'#E3C9BE',
+        sideTitle:'소득분위 6분위 이하 요건에서 미달',
+        sideBody:'현재 8분위입니다. 예외 조항은 발견되지 않았습니다. 재산정 결과가 반영되면 자동으로 다시 판정합니다.',
+        file:'2025_저소득층근로장학_공고.pdf · 3p', pdfNote:'1페이지 "소득 6분위 이하" 문장을 필수 요건으로 추출했습니다. 예외 조항 없음.',
+        history:'변경 이력 없음 · 10.02 최초 등록',
+        cta:'유사 공고 찾아보기', ctaBg:'#3B4235', ctaFg:'#F2F1EA',
+      },
+      abroad: {
+        state:'지원 가능', badgeBg:'#1F5E44', badgeFg:'#EFFAE6', heroBg:'#EEF7E2', heroBd:'#C9E3A6',
+        title:'해외교류 프로그램 참가자 모집', src:'국제교류원 RSS',
+        due:'마감 10.23 17:00', d:'D-10', amount:'항공료 · 체재비 일부 지원',
+        reqs:[
+          {...ok, label:'총 취득 학점 60학점 이상', src:'공고문 2p', mine:'96학점'},
+          {...ok, label:'평점 3.0 이상', src:'공고문 2p', mine:'4.02 / 4.5'},
+          {...ok, label:'어학 성적 제출 가능', src:'공고문 2p · 붙임1', mine:'제출 예정'},
+          {...ok, label:'재학 중 (휴학자 제외)', src:'공고문 2p', mine:'재학'},
+          {...flag, label:'파견 학기 시간표 충돌', src:'공고문 3p', mine:'다음 학기 — 무관'},
+        ],
+        docs:[
+          {name:'영문 성적증명서', where:'학사지원팀', lead:'3영업일', state:'오늘 신청', bg:Y.bg, fg:Y.fg},
+          {name:'수학계획서', where:'직접 작성', lead:'2일 예상', state:'미작성', bg:Y.bg, fg:Y.fg},
+          {name:'어학 성적표', where:'토익 사이트', lead:'즉시 출력', state:'보유', bg:G.bg, fg:G.fg},
+        ],
+        leadNote:'영문 성적증명서 3영업일 + 수학계획서 작성 2일. 마감 10.23 기준 오늘(10.13) 착수해야 시험 주간을 피할 수 있습니다.',
+        sideKind:'EXAM CONFLICT', sideTone:'#9C482B', sideBg:'#FCF4F0', sideBd:'#E3C9BE',
+        sideTitle:'마감이 중간고사 주간(10.20–10.24) 안에 있습니다',
+        sideBody:'시험 전 주에 서류를 끝내두는 편이 안전합니다.',
+        file:'2025_동계_해외교류_모집.pdf · 6p', pdfNote:'붙임1에서 어학 성적 기준과 제출 서류 목록을 추가로 추출했습니다.',
+        history:'변경 이력 없음 · 10.03 최초 등록',
+        cta:'증명서 신청하기', ctaBg:'#12150F', ctaFg:'#F2F1EA',
+      },
+      toeic: {
+        state:'지원 가능', badgeBg:'#1F5E44', badgeFg:'#EFFAE6', heroBg:'#EEF7E2', heroBd:'#C9E3A6',
+        title:'토익 응시료 지원 (2차)', src:'교양교육원 · 직접 등록',
+        due:'마감 10.22 17:00', d:'D-9', amount:'응시료 50,000원 환급',
+        reqs:[
+          {...ok, label:'학기당 2회 이내', src:'공고문 1p', mine:'올해 1회'},
+          {...ok, label:'재학 중 (휴학자 제외)', src:'공고문 1p', mine:'재학'},
+        ],
+        docs:[
+          {name:'응시확인서', where:'토익 사이트', lead:'즉시 출력', state:'미업로드', bg:Y.bg, fg:Y.fg},
+          {name:'응시료 영수증', where:'토익 사이트', lead:'즉시 출력', state:'보유', bg:G.bg, fg:G.fg},
+        ],
+        leadNote:'서류 모두 즉시 발급 가능합니다. 다만 마감일이 중간고사 주간이라 시험 전에 처리해 두세요.',
+        sideKind:'EXAM CONFLICT', sideTone:'#9C482B', sideBg:'#FCF4F0', sideBd:'#E3C9BE',
+        sideTitle:'마감 10.22가 시험 기간과 겹칩니다',
+        sideBody:'10.17(금)까지 끝내면 시험 주간에 신경 쓸 일이 없습니다.',
+        file:'토익응시료지원_2차.pdf · 1p', pdfNote:'캡처 이미지로 등록된 공고입니다. OCR로 텍스트를 추출했습니다.',
+        history:'사용자가 10.07 직접 등록 · 출처 1곳',
+        cta:'응시확인서 업로드', ctaBg:'#12150F', ctaFg:'#F2F1EA',
+      },
+    };
+  }
+
+  renderVals() {
+    const S = this.state.screen;
+    const G = {bg:'#E4F1DA', fg:'#1F5E44'}, Y = {bg:'#F7EED4', fg:'#7E651C'}, R = {bg:'#F0E3DE', fg:'#9C482B'};
+    const heads = {
+      dash: ['지금 챙기지 않으면 놓칩니다', '10월 13일 · 지원 가능 7 · 확인 필요 5 · 이번 주 마감 3'],
+      list: ['공고 42건', '내 프로필과 대조해 판정한 결과입니다 · 마지막 수집 오늘 08:10'],
+      detail: ['공고 상세', '요건·서류·중복 수혜를 한 화면에서 확인합니다'],
+      benefit: ['혜택 · 프로그램 11건', '시간표와 겹치는 4건은 자동으로 제외했습니다'],
+      cal: ['2025년 10월', '공고 마감 · 학사일정 · 시험 기간을 한 캘린더에'],
+      time: ['시간표', '프로그램 충돌 판정과 마감 일정 계산에만 사용합니다'],
+      profile: ['프로필', '여기 채운 값이 모든 판정의 기준이 됩니다'],
+      alert: ['알림 6건', '신규 공고 · 마감 임박 · 서류 착수 시점'],
+    };
+    const navDefs = [
+      ['대시보드','dash'], ['공고 42','list'], ['혜택','benefit'], ['캘린더','cal'],
+      ['시간표','time'], ['프로필','profile'], ['알림 3','alert'],
+    ];
+    const active = S === 'detail' ? 'list' : S;
+    const DT = this.details()[this.state.sel] || this.details().nsf2;
+    const filterDefs = [['전체','42','#6B7163'],['지원 가능','7','#2F8F5E'],['확인 필요','5','#C9A227'],['자격 미달','12','#B7BFC8'],['마감 임박','3','#9C482B']];
+
+    const ev = (label, kind) => ({label, bg: kind==='deadline'?'#F0E3DE':kind==='exam'?'#12150F':kind==='acad'?'#E4F1DA':'#EDEDE6',
+      fg: kind==='exam'?'#EFEFE7':kind==='deadline'?'#9C482B':kind==='acad'?'#1F5E44':'#4A5044'});
+    const dayEvents = {
+      13: [ev('서류 착수 ×1','acad')], 16: [ev('국가장학금 마감','deadline')], 18: [ev('성적우수 마감','deadline')],
+      20: [ev('중간고사','exam')], 21: [ev('중간고사','exam')], 22: [ev('중간고사','exam'), ev('토익 지원 마감','deadline')],
+      23: [ev('중간고사','exam'), ev('해외교류 마감','deadline')], 24: [ev('중간고사','exam')],
+      24.5: [], 8: [ev('근로장학 공고','acad')], 31: [ev('수강 정정','acad')],
+    };
+    const days = [];
+    for (let i = 0; i < 35; i++) {
+      const n = i - 2; // 2025-10-01 = Wed
+      const inMonth = n >= 1 && n <= 31;
+      days.push({
+        num: inMonth ? String(n) : '',
+        numTone: n === 13 ? '#1F5E44' : inMonth ? '#3B4235' : '#C6C7BE',
+        bg: n === 13 ? '#EEF7E2' : (n >= 20 && n <= 24) ? '#F8F8F3' : '#FFFFFF',
+        events: (inMonth && dayEvents[n]) || [],
+      });
+    }
+
+    const cls = [
+      {name:'자료구조', room:'공학관 401', c:2, r:'2 / 4'}, {name:'운영체제', room:'공학관 305', c:4, r:'2 / 4'},
+      {name:'컴퓨터네트워크', room:'IT관 208', c:2, r:'5 / 7'}, {name:'데이터베이스', room:'IT관 311', c:3, r:'4 / 6'},
+      {name:'소프트웨어공학', room:'공학관 402', c:5, r:'6 / 9'}, {name:'교양: 현대윤리', room:'인문관 112', c:3, r:'7 / 9'},
+    ];
+    const tones = ['#EAF2E2','#E9EFF3','#F4EFE3','#EFEAF2','#E7F1EF','#F2ECE8'];
+    const bds = ['#7FA860','#7C9DB5','#C0A662','#A18FB5','#6FA79B','#BE9782'];
+
+    return {
+      isDash:S==='dash', isList:S==='list', isDetail:S==='detail', isBenefit:S==='benefit',
+      isCal:S==='cal', isTime:S==='time', isProfile:S==='profile', isAlert:S==='alert',
+      pageTitle: heads[S][0], pageSub: heads[S][1],
+      nav: navDefs.map(([label, key]) => ({
+        label, go: this.go(key),
+        fg: active===key ? '#12150F' : '#CFD4C6',
+        bg: active===key ? '#B9F27C' : 'transparent',
+        bd: active===key ? '#B9F27C' : '#3A3F34',
+      })),
+
+      openHero: this.openD('nsf2'), goList: this.go('list'), goCal: this.go('cal'), goProfile: this.go('profile'),
+      toast: this.state.toast,
+      hideToast: () => this.setState({toast:false}),
+      fireToast: () => this.setState({toast:true}),
+      toastOpen: () => this.setState({screen:'detail', sel:'abroad', toast:false}),
+
+      todos: [
+        {d:'D-5', dTone:'#9C482B', title:'교내 성적우수 장학', note:'직전 학기 12학점 이수 여부가 확인되지 않았습니다', state:'확인 필요', bg:Y.bg, fg:Y.fg, action:'성적표 올리기', open:this.go('profile')},
+        {d:'착수', dTone:'#3F6B8A', title:'해외교류 프로그램 서류', note:'영문 성적증명서 발급 3영업일 · 마감 10.23', state:'지원 가능', bg:G.bg, fg:G.fg, action:'증명서 신청', open:this.openD('abroad')},
+        {d:'D-9', dTone:'#4A5044', title:'토익 응시료 지원', note:'응시확인서 업로드 필요 · 시험 주간과 겹침', state:'지원 가능', bg:G.bg, fg:G.fg, action:'서류 준비', open:this.openD('toeic')},
+        {d:'D-11', dTone:'#4A5044', title:'저소득층 근로장학', note:'소득분위 6분위 기준 초과 — 8분위', state:'자격 미달', bg:R.bg, fg:R.fg, action:'사유 보기', open:this.openD('lowinc')},
+      ],
+      progs: [
+        {tag:'졸업요건 인정', title:'SW 역량강화 부트캠프', meta:'8시간 · 목 18:00', open:this.go('benefit')},
+        {tag:'국제교류원', title:'외국인 학생 멘토링', meta:'활동비 30만원', open:this.go('benefit')},
+        {tag:'도서관', title:'논문 검색 워크숍', meta:'2시간 · 금 15:00', open:this.go('benefit')},
+      ],
+      week: [
+        {day:'MON', title:'해외교류 서류 착수', tone:'#3F6B8A'},
+        {day:'THU', title:'국가장학금 II유형 마감', tone:'#9C482B'},
+        {day:'SAT', title:'성적우수 장학 마감', tone:'#9C482B'},
+        {day:'MON', title:'중간고사 시작', tone:'#C9A227'},
+        {day:'WED', title:'토익 지원 마감', tone:'#C9A227'},
+      ],
+
+      filters: filterDefs.map(([label,n,dot]) => ({
+        label, n, dot, go: () => this.setState({filter:label}),
+        bg: this.state.filter===label ? '#EEF7E2' : 'transparent',
+        fg: this.state.filter===label ? '#12140F' : '#4A5044',
+        w: this.state.filter===label ? '600' : '400',
+      })),
+      sources: [
+        {label:'학교 공지 RSS', n:'14'}, {label:'한국장학재단 API', n:'11'},
+        {label:'공공데이터', n:'6'}, {label:'직접 등록', n:'4'}, {label:'교내 부서', n:'7'},
+      ],
+      notices: (this.props.hideIneligible ? (x) => x.filter(n => n.state !== '자격 미달') : (x) => x)([
+        {d:'D-3', dTone:'#9C482B', title:'국가장학금 II유형 2학기 신청', note:'출처 2곳에서 수집 · [수정] 재공고 반영', state:'지원 가능', bg:G.bg, fg:G.fg, src:'장학재단 API', req:'4/4', open:this.openD('nsf2')},
+        {d:'D-5', dTone:'#9C482B', title:'교내 성적우수 장학', note:'직전 학기 이수 학점 미확인', state:'확인 필요', bg:Y.bg, fg:Y.fg, src:'학생지원팀', req:'3/4', open:this.openD('merit')},
+        {d:'D-9', dTone:'#4A5044', title:'토익 응시료 지원 (2차)', note:'응시확인서 필요 · 시험 주간 겹침', state:'지원 가능', bg:G.bg, fg:G.fg, src:'교양교육원', req:'2/2', open:this.openD('toeic')},
+        {d:'D-10', dTone:'#4A5044', title:'해외교류 프로그램 참가자 모집', note:'영문 성적증명서 3영업일 소요', state:'지원 가능', bg:G.bg, fg:G.fg, src:'국제교류원', req:'5/5', open:this.openD('abroad')},
+        {d:'D-11', dTone:'#4A5044', title:'저소득층 근로장학', note:'소득 6분위 이하 요건 — 내 8분위', state:'자격 미달', bg:R.bg, fg:R.fg, src:'장학재단 API', req:'2/3', open:this.openD('lowinc')},
+        {d:'D-14', dTone:'#4A5044', title:'2학기 근로장학생 추가 모집', note:'주 15시간 이내 근로 가능 여부 확인', state:'지원 가능', bg:G.bg, fg:G.fg, src:'학생지원팀', req:'3/3', open:this.go('detail')},
+        {d:'D-18', dTone:'#4A5044', title:'창업동아리 활동비 지원', note:'팀 구성 3인 이상 요건 불확실', state:'확인 필요', bg:Y.bg, fg:Y.fg, src:'직접 등록', req:'2/3', open:this.go('detail')},
+        {d:'D-23', dTone:'#4A5044', title:'국가근로 동계 집중근로', note:'방학 중 근로 · 시간표 무관', state:'지원 가능', bg:G.bg, fg:G.fg, src:'장학재단 API', req:'4/4', open:this.go('detail')},
+        {d:'D-25', dTone:'#4A5044', title:'대학원 진학 예정자 연구장학', note:'졸업 예정자 한정 — 3학년', state:'자격 미달', bg:R.bg, fg:R.fg, src:'대학원 행정실', req:'1/3', open:this.go('detail')},
+      ]),
+
+      dt: DT, reqs: DT.reqs, docs: DT.docs,
+
+      benefitTabs: [
+        {label:'전체 11', bd:'#12150F', bg:'#12150F', fg:'#F2F1EA'},
+        {label:'졸업요건 인정 4', bd:'#DDDDD5', bg:'transparent', fg:'#3B4235'},
+        {label:'어학·자격 3', bd:'#DDDDD5', bg:'transparent', fg:'#3B4235'},
+        {label:'상담·복지 4', bd:'#DDDDD5', bg:'transparent', fg:'#3B4235'},
+      ],
+      benefits: [
+        {dept:'SW중심대학사업단', title:'SW 역량강화 부트캠프', desc:'졸업 요건 비교과 8시간이 한 번에 채워집니다. 미충족 항목 12시간 중 8시간 해당.', time:'목 18:00–20:00', credit:'8시간 인정', state:'우선 추천', bg:'#1F5E44', fg:'#EFFAE6', bd:'#C9E3A6', cardBg:'#F7FCF1', op:'1'},
+        {dept:'국제교류원', title:'외국인 학생 멘토링', desc:'학기 중 주 1회 활동. 활동비 30만원 지급.', time:'금 16:00–18:00', credit:'4시간 인정', state:'신청 가능', bg:'#E4F1DA', fg:'#1F5E44', bd:'#E2E2DB', cardBg:'#FCFCFA', op:'1'},
+        {dept:'교양교육원', title:'토익 응시료 지원 (2차)', desc:'응시확인서 제출 시 5만원 환급. 학기당 2회까지.', time:'상시', credit:'—', state:'신청 가능', bg:'#E4F1DA', fg:'#1F5E44', bd:'#E2E2DB', cardBg:'#FCFCFA', op:'1'},
+        {dept:'학생상담센터', title:'진로 심층 상담 (4회기)', desc:'회기당 50분. 학칙상 비교과 인정 대상이나 공고로 올라오지 않는 항목.', time:'예약제', credit:'2시간 인정', state:'규정 발굴', bg:'#EDEDE6', fg:'#4A5044', bd:'#E2E2DB', cardBg:'#FCFCFA', op:'1'},
+        {dept:'도서관', title:'논문 검색·인용 워크숍', desc:'RISS·DBpia 실습 포함.', time:'금 15:00–17:00', credit:'2시간 인정', state:'신청 가능', bg:'#E4F1DA', fg:'#1F5E44', bd:'#E2E2DB', cardBg:'#FCFCFA', op:'1'},
+        {dept:'경력개발센터', title:'모의 면접 클리닉', desc:'현직자 1:1 피드백. 정원 20명.', time:'수 14:00–16:00', credit:'3시간 인정', state:'확인 필요', bg:'#F7EED4', fg:'#7E651C', bd:'#E2E2DB', cardBg:'#FCFCFA', op:'1'},
+      ],
+      excluded: [
+        {title:'창업 아이디어 워크숍', clash:'월 10:00 자료구조'},
+        {title:'글로벌 역량강화 특강', clash:'화 12:00 데이터베이스'},
+        {title:'통계 프로그래밍 기초', clash:'월 13:00 컴퓨터네트워크'},
+        {title:'리더십 캠프 (1박)', clash:'목 14:00 소프트웨어공학'},
+      ],
+
+      dows: ['SUN','MON','TUE','WED','THU','FRI','SAT'],
+      days,
+      legend: [
+        {c:'#F0E3DE', label:'공고 마감'}, {c:'#12150F', label:'시험 기간'},
+        {c:'#E4F1DA', label:'학사 일정'}, {c:'#EDEDE6', label:'개인 일정'},
+      ],
+
+      weekdays: ['월','화','수','목','금'],
+      hours: ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'],
+      cells: Array.from({length:50}, (_, i) => i),
+      classes: cls.map((c, i) => ({
+        name: c.name, room: c.room, area: `${c.r.split(' / ')[0]} / ${c.c} / ${c.r.split(' / ')[1]} / ${c.c+1}`,
+        bg: tones[i], bd: bds[i],
+      })),
+
+      profileGroups: [
+        {title:'필수 항목', desc:'이 네 가지만 있으면 대부분의 공고를 판정할 수 있습니다', fields:[
+          {label:'학과', value:'컴퓨터공학과', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+          {label:'학년 / 학기', value:'3학년 2학기', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+          {label:'직전 학기 평점', value:'4.02 / 4.5', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+          {label:'소득분위', value:'6분위', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+        ]},
+        {title:'판정 정확도를 높이는 항목', desc:'비어 있으면 해당 요건은 "확인 필요"로 남습니다', fields:[
+          {label:'직전 학기 이수 학점', value:'입력 필요', bd:'#E3C9BE', bg:'#FCF4F0', fg:'#9C482B'},
+          {label:'총 취득 학점', value:'96학점', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+          {label:'비교과 이수 시간', value:'14 / 30시간', bd:'#DDDDD5', bg:'#FCFCFA', fg:'#12140F'},
+          {label:'어학 성적', value:'입력 필요', bd:'#E3C9BE', bg:'#FCF4F0', fg:'#9C482B'},
+        ]},
+      ],
+      privacy: [
+        {k:'학번 · 성적표 원본', v:'기기에만', tone:'#1F5E44'},
+        {k:'소득분위', v:'판정 시 전송', tone:'#7E651C'},
+        {k:'학년 · 학과 · 평점', v:'서버 저장', tone:'#5F6659'},
+      ],
+      history: [
+        {k:'2025-1 국가장학금 I유형', v:'수혜 260만'},
+        {k:'2024-2 교내 성적우수', v:'수혜 80만'},
+        {k:'2024-1 근로장학', v:'미선정'},
+      ],
+
+      alerts: [
+        {kind:'착수', title:'해외교류 서류, 오늘 신청해야 합니다', body:'영문 성적증명서 발급 3영업일 · 마감 10.23', time:'08:10', dot:'#9C482B', rowBg:'#FCFCF8', bg:'#F7EED4', fg:'#7E651C', open:this.openD('abroad')},
+        {kind:'마감', title:'국가장학금 II유형 D-3', body:'요건 4/4 충족 · 신청서만 작성하면 됩니다', time:'08:10', dot:'#9C482B', rowBg:'#FCFCF8', bg:'#F0E3DE', fg:'#9C482B', open:this.openD('nsf2')},
+        {kind:'신규', title:'2학기 근로장학생 추가 모집', body:'학생지원팀 RSS · 판정 결과 지원 가능', time:'어제', dot:'#2F8F5E', rowBg:'#FFFFFF', bg:'#E4F1DA', fg:'#1F5E44', open:this.go('list')},
+        {kind:'변경', title:'[수정] 국가장학금 마감이 변경되었습니다', body:'10.14 → 10.16 18:00 · 변경 부분 보기', time:'10.09', dot:'#C9A227', rowBg:'#FFFFFF', bg:'#F7EED4', fg:'#7E651C', open:this.openD('nsf2')},
+        {kind:'경고', title:'중복 수혜 충돌 감지', body:'국가장학금 II유형 ↔ 교내 성적우수 장학', time:'10.09', dot:'#9C482B', rowBg:'#FFFFFF', bg:'#F0E3DE', fg:'#9C482B', open:this.openD('nsf2')},
+        {kind:'신규', title:'SW 역량강화 부트캠프 (졸업요건 8시간)', body:'시간표 충돌 없음 · 미충족 요건에 해당', time:'10.08', dot:'#2F8F5E', rowBg:'#FFFFFF', bg:'#E4F1DA', fg:'#1F5E44', open:this.go('benefit')},
+      ],
+      settings: [
+        {label:'신규 공고 (지원 가능만)', track:'#1F5E44', x:'17px'},
+        {label:'마감 3일 전', track:'#1F5E44', x:'17px'},
+        {label:'서류 착수 시점', track:'#1F5E44', x:'17px'},
+        {label:'자격 미달 공고도 알림', track:'#D5D5CD', x:'2px'},
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>
