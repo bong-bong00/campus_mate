@@ -112,7 +112,7 @@ npm run lint     # 코드 검사
 
 | 단계 | 상태 |
 |---|---|
-| 프로필 데이터 구조 확정 | 초안만 — `src/features/profile/types.ts` |
+| 프로필 데이터 구조 | **확정** — `src/features/profile/types.ts`. 입력 폼·저장은 아직 없음 |
 | 공모전 수집 (API · 크롤링) | 없음 |
 | AI 코칭 (Claude API) | 없음 |
 | DB (PostgreSQL + Prisma) | 없음 |
